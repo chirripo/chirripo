@@ -10,6 +10,10 @@
     "support": {
         "docs": "https://github.com/chirripo/chirripo"
     },
+    "bin": ["bin/chirripo"],
+    "config": {
+        "bin-dir": "bin"
+    },
     "require": {
         "symfony/console": "^4.4",
         "symfony/process": "^5.0",
