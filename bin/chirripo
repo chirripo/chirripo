@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+
+<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Console\App\Commands\DockerComposeCommand;
+
+$app = new Application();
+$app->setName('Chirripo CLI Tool');
+$app->add(new DockerComposeCommand());
+$app->run();

@@ -1,0 +1,20 @@
+{
+    "name": "chirripo/chirripo",
+    "description": "Chirripo is an open source docker containers setup to be added easily to any existing php project.",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://github.com/chirripo/chirripo",
+    "support": {
+        "docs": "https://github.com/chirripo/chirripo"
+    },
+    "require": {
+        "symfony/console": "^4.4",
+        "symfony/process": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Console\\": "src"
+        },
+        "classmap": ["src"]
+    }
+}
