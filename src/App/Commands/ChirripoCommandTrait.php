@@ -17,8 +17,8 @@ trait ChirripoCommandTrait
         $dotenv = new Dotenv();
         if (\file_exists(__DIR__ . '/../../../.env')) {
             $dotenv->load(__DIR__ . '/../../../.env');
-        } elseif (\file_exists(__DIR__ . '/../../../../../.env')) {
-            $dotenv->load(__DIR__ . '/../../../.env');
+        } elseif (\file_exists(__DIR__ . '/../../../../../../.env')) {
+            $dotenv->load(__DIR__ . '/../../../../../../.env');
         }
     }
 }
