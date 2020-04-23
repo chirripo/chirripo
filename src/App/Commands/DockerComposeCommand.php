@@ -40,7 +40,12 @@ class DockerComposeCommand extends Command
 
         // Executes after the command finishes.
         if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+            $output->writeln(sprintf(
+                "\n\nOutput:\n================\n%s\n\nError Output:\n================\n%s",
+                $process->getOutput(),
+                $process->getErrorOutput()
+            ));
+            exit(1);
         }
 
         echo $process->getOutput();
