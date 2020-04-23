@@ -5,8 +5,13 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
 use Console\App\Commands\DockerComposeCommand;
+use Console\App\Commands\StartCommand;
+use Console\App\Commands\StopCommand;
 
 $app = new Application();
 $app->setName('Chirripo CLI Tool');
 $app->add(new DockerComposeCommand());
+$app->add(new StartCommand());
+$app->add(new StopCommand());
+
 $app->run();
