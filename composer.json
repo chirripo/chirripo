@@ -15,7 +15,7 @@
         "bin-dir": "bin"
     },
     "require": {
-        "symfony/console": "^4.4",
+        "symfony/console": "^3.4",
         "symfony/process": "^5.0",
         "symfony/dotenv": "^5.0"
     },
