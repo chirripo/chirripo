@@ -31,6 +31,8 @@ trait ChirripoCommandTrait
             'solr',
             'memcached',
             'selenium',
+            'varnish',
+            'mailhog',
         ];
 
         $files = [

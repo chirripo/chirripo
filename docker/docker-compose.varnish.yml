@@ -1,0 +1,7 @@
+version: "3.6"
+services:
+  varnish:
+    image: thiagofigueiro/varnish-alpine-docker:${VARNISH_TAG}
+    container_name: ${PROJECT_NAME}_varnish
+    ports:
+      - "${PORT_PREFIX}81:80"

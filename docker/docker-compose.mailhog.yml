@@ -1,0 +1,7 @@
+version: "3.6"
+services:
+  mailhog:
+    image: mailhog/mailhog:${MAILHOG_TAG}
+    container_name: ${PROJECT_NAME}_mailhog
+    ports:
+      - "${PORT_PREFIX}25:8025"
