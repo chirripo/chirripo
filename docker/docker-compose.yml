@@ -3,8 +3,8 @@ services:
   solr:
     image: solr:${SOLR_TAG}
     container_name: ${PROJECT_NAME}_solr
-    expose:
-      - "8983"
+    ports:
+      - "${PORT_PREFIX}83:8983"
     entrypoint:
       - "docker-entrypoint.sh"
       - "solr-create"
@@ -23,8 +23,8 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    expose:
-      - "3306"
+    ports:
+        - "${PORT_PREFIX}06:3306"
     volumes:
       - 'chirripo_database:/var/lib/mysql'
       - './mysql:/etc/mysql/conf.d'
@@ -48,7 +48,7 @@ services:
     image: nginx:${NGINX_TAG}
     container_name: ${PROJECT_NAME}_nginx
     ports:
-      - "80"
+      - "${PORT_PREFIX}80:80"
     depends_on:
       - php
     links:
@@ -56,6 +56,17 @@ services:
     volumes:
       - "${PROJECT_ROOT}:/var/www/html:delegated"
       - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
+
+  cli:
+    image: chirripo/cli:${CLI_TAG}
+    container_name: ${PROJECT_NAME}_cli
+    ports:
+      - "${PORT_PREFIX}22:22"
+    links:
+      - db
+    volumes:
+      - "${PROJECT_ROOT}:/var/www/html:delegated"
+      - "~/.ssh/id_rsa.pub:/root/.ssh/authorized_keys"
 
 volumes:
   chirripo_database:
