@@ -10,38 +10,27 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Dotenv\Dotenv;
 
 /**
- * Start Command class.
+ * Restart Command class.
  */
-class StartCommand extends Command
+class RestartCommand extends Command
 {
     use ChirripoCommandTrait;
 
     protected function configure()
     {
-        $this->setName('start')
-            ->setAliases([
-                'up',
-            ])
-            ->setDescription('Start containers');
+        $this->setName('restart')
+            ->setDescription('Restart containers');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->setupEnv();
-        $output->writeln(sprintf("Executing: docker-compose up -d...\n"));
+        $output->writeln(sprintf("Executing: docker-compose restart...\n"));
 
         $files = $this->setupFiles();
 
         $commands = [
-            array_merge(['docker-compose'], $files, ['up', '-d']),
-            [
-                'docker',
-                'cp',
-                '-a',
-                $_SERVER['HOME'] . '/.ssh/id_rsa.pub',
-                $_SERVER['PROJECT_NAME'] . '_cli:/root/.ssh/authorized_keys',
-            ],
-            ['docker', 'exec', $_SERVER['PROJECT_NAME'] . '_cli', 'chown', 'root:root', '/root/.ssh/authorized_keys'],
+            array_merge(['docker-compose'], $files, ['restart']),
         ];
         $docker_root = __DIR__ . '/../../../docker';
 
