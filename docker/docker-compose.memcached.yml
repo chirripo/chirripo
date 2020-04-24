@@ -2,6 +2,7 @@ version: "3.6"
 services:
   memcached:
     image: memcached:${MEMCACHED_TAG}
+    container_name: ${PROJECT_NAME}_memcached
     environment:
       # Memcached memory limit in megabytes
       - MEMCACHED_MEMORY_LIMIT=128

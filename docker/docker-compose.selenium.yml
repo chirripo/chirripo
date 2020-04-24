@@ -1,0 +1,10 @@
+version: "3.6"
+services:
+  selenium:
+    image: selenium/standalone-chrome-debug:3.6.0
+    container_name: ${PROJECT_NAME}_selenium
+    ports:
+      - "${PORT_PREFIX}59:5900"
+    # This helps keep selenium-chrome from crashing because it uses shared memory.
+    volumes:
+      - /dev/shm:/dev/shm
