@@ -33,6 +33,7 @@ trait ChirripoCommandTrait
             'selenium',
             'varnish',
             'mailhog',
+            'blackfire',
         ];
 
         $files = [

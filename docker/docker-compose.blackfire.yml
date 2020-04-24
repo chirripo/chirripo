@@ -1,0 +1,8 @@
+version: "3.6"
+services:
+  blackfire:
+    image: blackfire/blackfire:${BLACKFIRE_TAG}
+    container_name: ${PROJECT_NAME}_blackfire
+    environment:
+      - BLACKFIRE_SERVER_ID=${BLACKFIRE_SERVER_ID}
+      - BLACKFIRE_SERVER_TOKEN=${BLACKFIRE_SERVER_TOKEN}
