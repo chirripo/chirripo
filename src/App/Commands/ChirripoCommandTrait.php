@@ -29,6 +29,7 @@ trait ChirripoCommandTrait
     {
         $optional_services = [
             'solr',
+            'memcached',
         ];
 
         $files = [
