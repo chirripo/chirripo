@@ -11,11 +11,13 @@ use Symfony\Component\Console\Application;
 use Console\App\Commands\DockerComposeCommand;
 use Console\App\Commands\StartCommand;
 use Console\App\Commands\StopCommand;
+use Console\App\Commands\SshCommand;
 
 $app = new Application();
 $app->setName('Chirripo CLI Tool');
 $app->add(new DockerComposeCommand());
 $app->add(new StartCommand());
 $app->add(new StopCommand());
+$app->add(new SshCommand());
 
 $app->run();
