@@ -38,9 +38,6 @@ services:
     user: "${CONTAINER_UID}"
     expose:
       - "9000"
-    links:
-      - db
-      - solr
     volumes:
       - "${PROJECT_ROOT}:/var/www/html:delegated"
 
@@ -51,8 +48,6 @@ services:
       - "${PORT_PREFIX}80:80"
     depends_on:
       - php
-    links:
-      - php
     volumes:
       - "${PROJECT_ROOT}:/var/www/html:delegated"
       - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
@@ -62,8 +57,6 @@ services:
     container_name: ${PROJECT_NAME}_cli
     ports:
       - "${PORT_PREFIX}22:22"
-    links:
-      - db
     volumes:
       - "${PROJECT_ROOT}:/var/www/html:delegated"
       - "~/.ssh/id_rsa.pub:/root/.ssh/authorized_keys"
