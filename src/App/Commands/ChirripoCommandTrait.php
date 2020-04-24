@@ -21,4 +21,27 @@ trait ChirripoCommandTrait
             $dotenv->load(__DIR__ . '/../../../../../../.env');
         }
     }
+
+    /**
+     * Return files sintax to be passed to docker-compose commands.
+     */
+    protected function setupFiles()
+    {
+        $optional_services = [
+            'solr',
+        ];
+
+        $files = [
+            '-f',
+            'docker-compose.yml',
+        ];
+
+        foreach ($optional_services as $service) {
+            if (!empty($_SERVER[\strtoupper($service) . '_ENABLE'])) {
+                $files[] = '-f';
+                $files[] = 'docker-compose.' . $service . '.yml';
+            }
+        }
+        return $files;
+    }
 }

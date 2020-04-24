@@ -33,7 +33,9 @@ class DockerComposeCommand extends Command
         $this->setupEnv();
         $output->writeln(sprintf("Executing: docker-compose %s...\n", $input->getArgument('composeCommand')));
 
-        $command = ['docker-compose'];
+        $files = $this->setupFiles();
+
+        $command = array_merge(['docker-compose'], $files);
         $argument = $input->getArgument('composeCommand');
         $command_components = explode(' ', $argument);
         $command = array_merge($command, $command_components);

@@ -26,7 +26,8 @@ class StopCommand extends Command
         $this->setupEnv();
         $output->writeln(sprintf("Executing: docker-compose stop...\n"));
 
-        $command = ['docker-compose', 'stop'];
+        $files = $this->setupFiles();
+        $command = array_merge(['docker-compose'], $files, ['stop']);
         $docker_root = __DIR__ . '/../../../docker';
         $process = new Process($command, $docker_root);
         $process->setTimeout(300);

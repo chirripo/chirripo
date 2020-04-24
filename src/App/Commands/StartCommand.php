@@ -27,8 +27,10 @@ class StartCommand extends Command
         $this->setupEnv();
         $output->writeln(sprintf("Executing: docker-compose up -d...\n"));
 
+        $files = $this->setupFiles();
+
         $commands = [
-            ['docker-compose', 'up', '-d'],
+            array_merge(['docker-compose'], $files, ['up', '-d']),
             [
                 'docker',
                 'cp',

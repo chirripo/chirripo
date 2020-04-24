@@ -1,0 +1,16 @@
+version: "3.6"
+services:
+  solr:
+    image: solr:${SOLR_TAG}
+    container_name: ${PROJECT_NAME}_solr
+    ports:
+      - "${PORT_PREFIX}83:8983"
+    entrypoint:
+      - "docker-entrypoint.sh"
+      - "solr-create"
+      - "-c"
+      - "collection1"
+      - "-d"
+      - "/config"
+    volumes:
+      - './solr/config:/config'
