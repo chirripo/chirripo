@@ -14,6 +14,7 @@ use Console\App\Commands\StopCommand;
 use Console\App\Commands\SshCommand;
 use Console\App\Commands\StatusCommand;
 use Console\App\Commands\RestartCommand;
+use Console\App\Commands\DockerLogsCommand;
 
 $app = new Application();
 $app->setName('Chirripo CLI Tool');
@@ -23,5 +24,6 @@ $app->add(new StopCommand());
 $app->add(new SshCommand());
 $app->add(new RestartCommand());
 $app->add(new StatusCommand());
+$app->add(new DockerLogsCommand());
 
 $app->run();
