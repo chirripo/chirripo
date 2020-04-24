@@ -27,20 +27,33 @@ class StartCommand extends Command
         $this->setupEnv();
         $output->writeln(sprintf("Executing: docker-compose up -d...\n"));
 
-        $command = ['docker-compose', 'up', '-d'];
+        $commands = [
+            ['docker-compose', 'up', '-d'],
+            [
+                'docker',
+                'cp',
+                '-a',
+                $_SERVER['HOME'] . '/.ssh/id_rsa.pub',
+                $_SERVER['PROJECT_NAME'] . '_cli:/root/.ssh/authorized_keys',
+            ],
+            ['docker', 'exec', $_SERVER['PROJECT_NAME'] . '_cli', 'chown', 'root:root', '/root/.ssh/authorized_keys'],
+        ];
         $docker_root = __DIR__ . '/../../../docker';
-        $process = new Process($command, $docker_root);
-        $process->setTimeout(300);
-        $process->run();
 
-        // Executes after the command finishes.
-        if (!$process->isSuccessful()) {
-            $output->writeln(sprintf(
-                "\n\nOutput:\n================\n%s\n\nError Output:\n================\n%s",
-                $process->getOutput(),
-                $process->getErrorOutput()
-            ));
-            exit(1);
+        foreach ($commands as $command) {
+            $process = new Process($command, $docker_root);
+            $process->setTimeout(300);
+            $process->run();
+
+            // Executes after the command finishes.
+            if (!$process->isSuccessful()) {
+                $output->writeln(sprintf(
+                    "\n\nOutput:\n================\n%s\n\nError Output:\n================\n%s",
+                    $process->getOutput(),
+                    $process->getErrorOutput()
+                ));
+                exit(1);
+            }
         }
 
         echo $process->getOutput();

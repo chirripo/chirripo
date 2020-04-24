@@ -59,7 +59,6 @@ services:
       - "${PORT_PREFIX}22:22"
     volumes:
       - "${PROJECT_ROOT}:/var/www/html:delegated"
-      - "~/.ssh/id_rsa.pub:/root/.ssh/authorized_keys"
 
 volumes:
   chirripo_database:
