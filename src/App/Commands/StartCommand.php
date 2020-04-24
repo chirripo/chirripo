@@ -57,5 +57,7 @@ class StartCommand extends Command
         }
 
         echo $process->getOutput();
+
+        $output->writeln(sprintf("The site is now available at http://localhost:%s80/", $_SERVER['PORT_PREFIX']));
     }
 }
