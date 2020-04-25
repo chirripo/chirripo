@@ -89,9 +89,7 @@ class DbImportCommand extends Command
                 exec($command_string, $output, $return_code);
                 if ($number === 1) {
                     $output_string = implode("\n", $output);
-                    if (strpos($output_string, 'command not found: pv') === false) {
-                        // Error. Do not log error.
-                    } else {
+                    if (strpos($output_string, 'command not found: pv')) {
                         exit();
                     }
                 }
