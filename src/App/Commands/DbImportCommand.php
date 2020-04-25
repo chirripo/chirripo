@@ -83,32 +83,40 @@ class DbImportCommand extends Command
 
         foreach ($commands as $number => $command) {
             if ($number >= 1) {
-                $output = [];
+                $temp_output = [];
                 $return_code = 0;
                 $command_string = implode(' ', $command);
-                exec($command_string, $output, $return_code);
+                // Commands number 1 and 2 use piping and need to be run with exec.
+                exec($command_string, $temp_output, $return_code);
                 if ($number === 1) {
-                    $output_string = implode("\n", $output);
-                    if (strpos($output_string, 'command not found: pv')) {
+                    // Number 1 command is optional by using pv.
+                    // Return code is badly set to 0 even if it fails.
+                    // Output string will be empty if it fails.
+                    $output_string = implode("\n", $temp_output);
+                    if (!$return_code || ($return_code === 0 && !$output_string)) {
+                        // Do not print output.
+                        continue;
+                    } else {
                         exit();
                     }
                 }
-                // Do not log if error.
-                continue;
-            }
+                echo implode("\n", $temp_output);
+                $output->writeln('Success');
+            } else {
+                // This will run only for command 0.
+                $process = new Process($command, $docker_root);
+                $process->setTimeout(300);
+                $process->run();
 
-            $process = new Process($command, $docker_root);
-            $process->setTimeout(300);
-            $process->run();
-
-            // Executes after the command finishes.
-            if (!$process->isSuccessful()) {
-                $output->writeln(sprintf(
-                    "\n\nOutput:\n================\n%s\n\nError Output:\n================\n%s",
-                    $process->getOutput(),
-                    $process->getErrorOutput()
-                ));
-                exit(1);
+                // Executes after the command finishes.
+                if (!$process->isSuccessful()) {
+                    $output->writeln(sprintf(
+                        "\n\nOutput:\n================\n%s\n\nError Output:\n================\n%s",
+                        $process->getOutput(),
+                        $process->getErrorOutput()
+                    ));
+                    exit(1);
+                }
             }
         }
 
