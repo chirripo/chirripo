@@ -46,6 +46,7 @@ class DrushCommand extends Command
             'root',
             'localhost',
             'drush',
+            '--root=/var/www/html'
         ], $drush_command);
 
         $process = new Process($command, $docker_root);
