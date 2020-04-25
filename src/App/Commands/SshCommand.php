@@ -30,11 +30,11 @@ class SshCommand extends Command
 
         $command = [
             'localhost',
+            'cd /var/www/html ; bash',
         ];
 
         $argv = $_SERVER['argv'];
         $argv = array_merge($argv, $command);
-        var_dump($argv);
 
         $command_classes = ['Console\App\Commands\RoboCommands'];
         $runner = new Runner($command_classes);
