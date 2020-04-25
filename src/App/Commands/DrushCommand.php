@@ -33,7 +33,7 @@ class DrushCommand extends Command
         $drush_command = $input->getArgument('drushCommand');
         $docker_root = __DIR__ . '/../../../docker';
 
-        $drush_string = 'drush ';
+        $drush_string = 'drush --root=/var/www/html ';
         $drush_string .= implode(' ', $drush_command);
 
         $command = [
