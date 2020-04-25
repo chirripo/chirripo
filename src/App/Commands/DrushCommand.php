@@ -8,6 +8,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Robo\Runner;
 
 /**
  * Drush Command class.
@@ -31,37 +33,23 @@ class DrushCommand extends Command
         $drush_command = $input->getArgument('drushCommand');
         $docker_root = __DIR__ . '/../../../docker';
 
-        $command = array_merge([
+        $drush_string = 'drush ';
+        $drush_string .= implode(' ', $drush_command);
+
+        $command = [
             'ssh',
-            '-t',
-            '-p',
-            $_ENV['PORT_PREFIX'] . '22',
-            '-o',
-            'ForwardAgent=yes',
-            '-o',
-            'StrictHostKeyChecking=no',
-            '-o',
-            'UserKnownHostsFile=/dev/null',
-            '-l',
-            'root',
             'localhost',
-            'drush',
-            '--root=/var/www/html'
-        ], $drush_command);
+            $drush_string,
+        ];
 
-        $process = new Process($command, $docker_root);
-        $process->setTimeout(300);
-        $process->run();
-        // Executes after the command finishes.
-        if (!$process->isSuccessful()) {
-            $output->writeln(sprintf(
-                "\n\nOutput:\n================\n%s\n\nError Output:\n================\n%s",
-                $process->getOutput(),
-                $process->getErrorOutput()
-            ));
-            exit(1);
-        }
+        $argv = $_SERVER['argv'];
+        array_splice($argv, 1, 1);
+        $argv = array_merge($argv, $command);
 
-        echo $process->getOutput();
+        $command_classes = ['Console\App\Commands\RoboCommands'];
+        $runner = new Runner($command_classes);
+        $output = new ConsoleOutput();
+        $status_code = $runner->execute($argv, 'Chirripo', null, $output);
+        exit($status_code);
     }
 }

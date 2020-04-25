@@ -7,6 +7,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Robo\Runner;
 
 /**
  * SSH Command class.
@@ -18,8 +20,8 @@ class SshCommand extends Command
     protected function configure()
     {
         $this->setName('ssh')
-            ->setDescription('Print ssh command')
-            ->setHelp('You could also enclose the call of this command into backticks to immediately execute it.');
+            ->setDescription('SSH into CLI container')
+            ->setHelp('Create ssh session to CLI container.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -27,25 +29,17 @@ class SshCommand extends Command
         $this->setupEnv();
 
         $command = [
-            'ssh',
-            '-t',
-            '-p',
-            $_ENV['PORT_PREFIX'] . '22',
-            '-o',
-            'ForwardAgent=yes',
-            '-o',
-            'StrictHostKeyChecking=no',
-            '-o',
-            'UserKnownHostsFile=/dev/null',
-            '-l',
-            'root',
             'localhost',
         ];
 
-        $command_string = implode(' ', $command);
-        $output->writeln(sprintf(
-            "%s\n",
-            $command_string,
-        ));
+        $argv = $_SERVER['argv'];
+        $argv = array_merge($argv, $command);
+        var_dump($argv);
+
+        $command_classes = ['Console\App\Commands\RoboCommands'];
+        $runner = new Runner($command_classes);
+        $output = new ConsoleOutput();
+        $status_code = $runner->execute($argv, 'Chirripo', null, $output);
+        exit($status_code);
     }
 }
