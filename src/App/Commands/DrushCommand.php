@@ -29,7 +29,6 @@ class DrushCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->setupEnv();
-
         $drush_command = $input->getArgument('drushCommand');
         $docker_root = __DIR__ . '/../../../docker';
 
@@ -42,8 +41,9 @@ class DrushCommand extends Command
             $drush_string,
         ];
 
+        $arg_count = count($_SERVER['argv']);
         $argv = $_SERVER['argv'];
-        array_splice($argv, 1, 1);
+        array_splice($argv, 1, $arg_count);
         $argv = array_merge($argv, $command);
 
         $command_classes = ['Console\App\Commands\RoboCommands'];
