@@ -17,6 +17,7 @@ use Console\App\Commands\RestartCommand;
 use Console\App\Commands\DockerLogsCommand;
 use Console\App\Commands\UrlCommand;
 use Console\App\Commands\DrushCommand;
+use Console\App\Commands\MysqlCommand;
 
 $app = new Application();
 $app->setName('Chirripo CLI Tool');
@@ -29,6 +30,7 @@ $app->add(new StatusCommand());
 $app->add(new DockerLogsCommand());
 $app->add(new UrlCommand());
 $app->add(new DrushCommand());
+$app->add(new MysqlCommand());
 
 
 $app->run();
