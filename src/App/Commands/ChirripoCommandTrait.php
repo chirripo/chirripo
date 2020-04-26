@@ -47,6 +47,17 @@ trait ChirripoCommandTrait
                 $files[] = 'docker-compose.' . $service . '.yml';
             }
         }
+
+        // Support override file.
+        if (\file_exists(__DIR__ . '/../../../docker-compose.override.yml')) {
+            $files[] = '-f';
+            $files[] = __DIR__ . '/../../../docker-compose.override.yml';
+        } elseif (\file_exists(__DIR__ . '/../../../../../../docker-compose.override.yml')) {
+            $files[] = '-f';
+            $files[] = __DIR__ . '/../../../../../../docker-compose.override.yml';
+        }
+
+
         return $files;
     }
 }
