@@ -1,0 +1,23 @@
+language: php
+php:
+  - 7.2
+  - 7.3
+  - 7.4
+before_install:
+  - cd ~
+  - composer create-project drupal/recommended-project:~8.8.0 testchirripo --stability dev --no-interaction
+  - cd testchirripo
+  - composer config repositories.chirripo path $TRAVIS_BUILD_DIR
+  - composer config extra.enable-patching true
+before_script:
+  - cd ~/testchirripo
+  - composer require chirripo/chirripo:"*"
+  - cp vendor/chirripo/chirripo/env.example .env
+script:
+  - cd ~/testchirripo
+  - ./vendor/bin/chirripo start
+  - ./vendor/bin/chirripo ps
+  - ./vendor/bin/chirripo logs
+  - ./vendor/bin/chirripo drush status
+  - ./vendor/bin/chirripo url
+  - ./vendor/bin/chirripo stop
