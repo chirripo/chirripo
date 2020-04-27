@@ -3,6 +3,8 @@ php:
   - 7.2
   - 7.3
   - 7.4
+env:
+  - COMPOSER_MEMORY_LIMIT=-1
 before_install:
   - cd ~
   - composer create-project drupal/recommended-project:~8.8.0 testchirripo --stability dev --no-interaction
@@ -11,7 +13,6 @@ before_install:
   - composer config extra.enable-patching true
   - composer require drush/drush
 before_script:
-  - alias composer="php -d memory_limit=-1 /usr/local/bin/composer"
   - cd ~/testchirripo
   - composer require chirripo/chirripo:"*"
   - cp vendor/chirripo/chirripo/env.example .env
