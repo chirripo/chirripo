@@ -18,6 +18,7 @@ before_script:
   - cd ~/testchirripo
   - composer require chirripo/chirripo:"*"
   - cp vendor/chirripo/chirripo/env.example .env
+  - echo "PROJECT_ROOT=~/testchirripo" >> .env
 script:
   - cd ~/testchirripo
   - ./vendor/bin/chirripo start
