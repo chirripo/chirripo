@@ -13,6 +13,7 @@ before_install:
   - composer config repositories.chirripo path $TRAVIS_BUILD_DIR
   - composer config extra.enable-patching true
   - composer require drush/drush
+  - ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< y
 before_script:
   - cd ~/testchirripo
   - composer require chirripo/chirripo:"*"
