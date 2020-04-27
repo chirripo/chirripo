@@ -9,7 +9,9 @@ before_install:
   - cd testchirripo
   - composer config repositories.chirripo path $TRAVIS_BUILD_DIR
   - composer config extra.enable-patching true
+  - composer require drush/drush
 before_script:
+  - alias composer="php -d memory_limit=-1 /usr/local/bin/composer"
   - cd ~/testchirripo
   - composer require chirripo/chirripo:"*"
   - cp vendor/chirripo/chirripo/env.example .env
