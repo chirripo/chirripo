@@ -1,0 +1,29 @@
+language: php
+php:
+  - 7.2
+  - 7.3
+  - 7.4
+env:
+  - COMPOSER_MEMORY_LIMIT=-1 COMPOSER_MIRROR_PATH_REPOS=1
+before_install:
+  - cd ~
+  - composer create-project drupal/recommended-project:~8.8.0 testchirripo --stability dev --no-interaction
+  - cd testchirripo
+  - composer install
+  - composer config repositories.chirripo path $TRAVIS_BUILD_DIR
+  - composer config extra.enable-patching true
+  - composer require drush/drush
+  - ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< y
+before_script:
+  - cd ~/testchirripo
+  - composer require chirripo/chirripo:"*"
+  - cp vendor/chirripo/chirripo/env.example .env
+  - echo "PROJECT_ROOT=~/testchirripo" >> .env
+script:
+  - cd ~/testchirripo
+  - ./vendor/bin/chirripo start
+  - ./vendor/bin/chirripo ps
+  - ./vendor/bin/chirripo logs
+  - ./vendor/bin/chirripo drush status
+  - ./vendor/bin/chirripo url
+  - ./vendor/bin/chirripo stop

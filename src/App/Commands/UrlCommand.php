@@ -48,7 +48,7 @@ class UrlCommand extends Command
         } else {
             $output->writeln(sprintf(
                 "Service %s not defined",
-                $service,
+                $service
             ));
             exit(1);
         }

@@ -1,6 +1,8 @@
 Chirripo
 ========
 
+[![Build Status](https://travis-ci.org/chirripo/chirripo.svg?branch=master)](https://travis-ci.org/chirripo/chirripo)
+
 Docker containers setup that can be easily added to your project by using composer.
 
 # Instructions
