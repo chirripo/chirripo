@@ -4,12 +4,12 @@ php:
   - 7.3
   - 7.4
 env:
-  - COMPOSER_MEMORY_LIMIT=-1
-  - COMPOSER_MIRROR_PATH_REPOS=1
+  - COMPOSER_MEMORY_LIMIT=-1 COMPOSER_MIRROR_PATH_REPOS=1
 before_install:
   - cd ~
   - composer create-project drupal/recommended-project:~8.8.0 testchirripo --stability dev --no-interaction
   - cd testchirripo
+  - composer install
   - composer config repositories.chirripo path $TRAVIS_BUILD_DIR
   - composer config extra.enable-patching true
   - composer require drush/drush
