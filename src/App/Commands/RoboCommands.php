@@ -12,6 +12,7 @@ use Robo\Tasks;
  */
 class RoboCommands extends Tasks
 {
+    use ChirripoCommandTrait;
 
     /**
      * Run ssh command on current site.
@@ -33,5 +34,29 @@ class RoboCommands extends Tasks
             $sshExec->arg($arg);
         }
         return $sshExec->run();
+    }
+
+    /**
+     * Run docker-compose command on current site.
+     *
+     * Run docker-compose command on current site.
+     *
+     * @param array $cmd Array of arguments to create a full Drush command.
+     */
+    public function compose(array $cmd)
+    {
+        $docker_root = __DIR__ . '/../../../docker';
+        $files = $this->setupFiles();
+        $dcExec = $this->taskExec('docker-compose')->dir($docker_root);
+        foreach ($files as $index => $file) {
+            if ($index % 2 === 0) {
+                continue;
+            }
+            $dcExec->option('-f', $file);
+        }
+        foreach ($cmd as $arg) {
+            $dcExec->arg($arg);
+        }
+        return $dcExec->run();
     }
 }
