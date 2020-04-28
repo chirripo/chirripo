@@ -34,5 +34,4 @@ $app->add(new DrushCommand());
 $app->add(new MysqlCommand());
 $app->add(new DbImportCommand());
 
-
 $app->run();
