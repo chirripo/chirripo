@@ -1,0 +1,51 @@
+
+<!--- Please use this template when reporting issues or suggesting features. **Delete this section** and fill in the rest of the template below, deleting the commented sections -->
+
+## Issue Type
+
+<!--- Pick one below and delete the rest: -->
+ - Bug Report / Support Request
+ - Feature Idea
+ - Documentation Report
+
+## Your Environment
+
+<!--- Paste the output from the following commands and requested info: (paste it in the space between the three graves) -->
+### php -v
+
+```
+
+```
+
+### docker --version
+
+```
+
+```
+
+### docker-compose --version
+
+```
+
+```
+
+### Contents of .env file (Remove any sensitive data)
+
+```
+
+```
+
+## Your OS
+
+<!--- Pick one below and delete the rest: -->
+ - **macOS** (version)
+ - **Windows** (version)
+ - **Linux** (version)
+
+## Full console output
+
+<!--- If this is a Bug Report / Support Request, please copy the ENTIRE contents of your console (including the command that was run), paste it into a new Gist on https://gist.github.com, then paste the link to the gist here. -->
+
+## Summary
+
+<!--- Explain the problem briefly. If submitting a bug report or support request, PLEASE paste the entire error message you're getting. -->
