@@ -19,6 +19,8 @@ use Console\App\Commands\UrlCommand;
 use Console\App\Commands\DrushCommand;
 use Console\App\Commands\MysqlCommand;
 use Console\App\Commands\DbImportCommand;
+use Console\App\Commands\XdebugEnableCommand;
+use Console\App\Commands\XdebugDisableCommand;
 
 $app = new Application();
 $app->setName('Chirripo CLI Tool');
@@ -33,6 +35,7 @@ $app->add(new UrlCommand());
 $app->add(new DrushCommand());
 $app->add(new MysqlCommand());
 $app->add(new DbImportCommand());
-
+$app->add(new XdebugEnableCommand());
+$app->add(new XdebugDisableCommand());
 
 $app->run();
