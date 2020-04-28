@@ -22,7 +22,6 @@ services:
       - PHP_POST_MAX_SIZE=${PHP_POST_MAX_SIZE}
       - PHP_UPLOAD_MAX_FILESIZE=${PHP_UPLOAD_MAX_FILESIZE}
       - XDEBUG_ENABLE=${XDEBUG_ENABLE}
-    user: "${PHP_CONTAINER_UID}"
     expose:
       - "9000"
     volumes:
