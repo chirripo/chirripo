@@ -33,7 +33,7 @@ class StartCommand extends Command
         $files = $this->setupFiles();
 
         $commands = [
-            array_merge(['docker-compose'], $files, ['up', '-d']),
+            array_merge(['docker-compose'], $files, ['up', '-d', '--remove-orphan']),
             [
                 'docker',
                 'cp',
