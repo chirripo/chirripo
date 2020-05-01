@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 
 <?php
+
 if (\file_exists(__DIR__ . '/../vendor/autoload.php')) {
     require_once __DIR__ . '/../vendor/autoload.php';
 } elseif (\file_exists(__DIR__ . '/../../../autoload.php')) {
@@ -8,35 +9,47 @@ if (\file_exists(__DIR__ . '/../vendor/autoload.php')) {
 }
 
 use Symfony\Component\Console\Application;
-use Console\App\Commands\DockerComposeCommand;
-use Console\App\Commands\StartCommand;
-use Console\App\Commands\StopCommand;
-use Console\App\Commands\DownCommand;
-use Console\App\Commands\SshCommand;
-use Console\App\Commands\StatusCommand;
-use Console\App\Commands\RestartCommand;
-use Console\App\Commands\DockerLogsCommand;
-use Console\App\Commands\UrlCommand;
-use Console\App\Commands\DrushCommand;
-use Console\App\Commands\MysqlCommand;
-use Console\App\Commands\DbImportCommand;
+use Symfony\Component\Dotenv\Dotenv;
+use Consolidation\AnnotatedCommand\CommandFileDiscovery;
 
-$projectRootPath = dirname(\Composer\Factory::getComposerFile());
-echo $projectRootPath;
+use Chirripo\Commands\TestCommand;
+
+$dotenv = new Dotenv();
+if (\file_exists(__DIR__ . '/../../.env')) {
+    $dotenv->load(__DIR__ . '/../../.env');
+} elseif (\file_exists(__DIR__ . '/../../../../.env')) {
+    $dotenv->load(__DIR__ . '/../../../../.env');
+}
+
+$project_root = str_replace('~', $_SERVER['HOME'], $_SERVER['PROJECT_ROOT']);
+
+$chirripo_root = $project_root . '/vendor/chirripo/chirripo';
+
+if (!file_exists($chirripo_root)) {
+    $chirripo_root = $project_root;
+}
+
+$chirripo_commands_folder = $chirripo_root . '/src/App/Commands';
+
+$discovery = new CommandFileDiscovery();
+$discovery->setSearchPattern('*Command.php');
+$default_command_classes = $discovery->discover($chirripo_commands_folder, 'Console\App\Commands');
+
+$custom_commands_folder = $project_root . '/src/Chirripo/Commands/';
+var_dump($custom_commands_folder);
+$custom_commands_classes = [];
+if (file_exists($custom_commands_folder)) {
+    echo 'FILE EXISTS!';
+    $custom_commands_classes = $discovery->discover($custom_commands_folder, 'Chirripo\Commands');
+}
+
+$command_classes = array_merge($default_command_classes, $custom_commands_classes);
 
 $app = new Application();
 $app->setName('Chirripo CLI Tool');
-$app->add(new DockerComposeCommand());
-$app->add(new StartCommand());
-$app->add(new StopCommand());
-$app->add(new DownCommand());
-$app->add(new SshCommand());
-$app->add(new RestartCommand());
-$app->add(new StatusCommand());
-$app->add(new DockerLogsCommand());
-$app->add(new UrlCommand());
-$app->add(new DrushCommand());
-$app->add(new MysqlCommand());
-$app->add(new DbImportCommand());
+
+foreach ($command_classes as $command_class) {
+    $app->add(new $command_class());
+}
 
 $app->run();
