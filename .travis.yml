@@ -27,6 +27,6 @@ script:
   - ./vendor/bin/chirripo logs
   - ./vendor/bin/chirripo drush status
   - ./vendor/bin/chirripo url
-  - ./vendor/bin/chirripo stop
   - ./vendor/bin/chirripo phpm | grep -q xdebug
   - ./vendor/bin/chirripo phpi | grep -q xdebug.remote_enable
+  - ./vendor/bin/chirripo stop
