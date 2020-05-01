@@ -20,6 +20,8 @@ use Console\App\Commands\UrlCommand;
 use Console\App\Commands\DrushCommand;
 use Console\App\Commands\MysqlCommand;
 use Console\App\Commands\DbImportCommand;
+use Console\App\Commands\PhpModulesCommand;
+use Console\App\Commands\PhpInfoCommand;
 
 $app = new Application();
 $app->setName('Chirripo CLI Tool');
@@ -35,5 +37,7 @@ $app->add(new UrlCommand());
 $app->add(new DrushCommand());
 $app->add(new MysqlCommand());
 $app->add(new DbImportCommand());
+$app->add(new PhpModulesCommand());
+$app->add(new PhpInfoCommand());
 
 $app->run();

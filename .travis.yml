@@ -19,6 +19,7 @@ before_script:
   - composer require chirripo/chirripo:"*"
   - cp vendor/chirripo/chirripo/env.example .env
   - echo "PROJECT_ROOT=~/testchirripo" >> .env
+  - echo "XDEBUG_ENABLE=enable" >> .env
 script:
   - cd ~/testchirripo
   - ./vendor/bin/chirripo start
@@ -27,3 +28,5 @@ script:
   - ./vendor/bin/chirripo drush status
   - ./vendor/bin/chirripo url
   - ./vendor/bin/chirripo stop
+  - ./bin/chirripo phpm | grep -q xdebug
+  - ./bin/chirripo phpi | grep -q xdebug.remote_enable
