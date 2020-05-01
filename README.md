@@ -18,3 +18,11 @@ You can change any variable defined in .env to make adjustments to the provided 
 # Xdebug
 
 - In order to setup xdebug, set XDEBUG_ENABLE variable to "enable", then stop & start the containers.
+
+# Commands
+
+For drush, ssh and compose commands; if you need to forward options to the actual command, you need to use --
+
+Examples:
+- chirripo compose -- logs -f nginx
+- chirripo drush -- --version
