@@ -21,6 +21,9 @@ use Console\App\Commands\DrushCommand;
 use Console\App\Commands\MysqlCommand;
 use Console\App\Commands\DbImportCommand;
 
+$projectRootPath = dirname(\Composer\Factory::getComposerFile());
+echo $projectRootPath;
+
 $app = new Application();
 $app->setName('Chirripo CLI Tool');
 $app->add(new DockerComposeCommand());
