@@ -1,7 +1,6 @@
 server {
     server_name localhost;
-    # @TODO: Make /web part variable.
-    root /var/www/html/web;
+    root ${NGINX_DOCROOT};
 
     client_max_body_size 100m;
 
