@@ -17,7 +17,10 @@ class PhpModulesCommand extends Command
 
     protected function configure()
     {
-        $this->setName('phpm')
+        $this->setName('php-modules')
+            ->setAliases([
+                'phpm',
+            ])
             ->setDescription('Show PHP Modules');
     }
 

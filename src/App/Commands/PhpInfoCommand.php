@@ -17,7 +17,10 @@ class PhpInfoCommand extends Command
 
     protected function configure()
     {
-        $this->setName('phpi')
+        $this->setName('php-info')
+            ->setAliases([
+                'phpi',
+            ])
             ->setDescription('Show PHP Info');
     }
 
