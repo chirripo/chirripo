@@ -11,6 +11,10 @@ Docker containers setup that can be easily added to your project by using compos
 - Copy env.example to root: `cp ./vendor/chirripo/chirripo/env.example .env`
 - Use the package like this: `./vendor/bin/chirripo list`
 
+# Documentation
+
+Read the [official documentation](https://docs.chirripo.dev)
+
 # Customize
 
 You can change any variable defined in .env to make adjustments to the provided setup. You can also create a file named `docker-compose.override.yml` in the root of your project to make more advanced customizations.
