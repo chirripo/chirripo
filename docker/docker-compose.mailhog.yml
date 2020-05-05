@@ -3,5 +3,16 @@ services:
   mailhog:
     image: mailhog/mailhog:${MAILHOG_TAG}
     container_name: ${PROJECT_NAME}_mailhog
+    labels:
+      - traefik.http.routers.mailhog-${PROJECT_NAME}.rule=Host(`mailhog.${VIRTUAL_HOST}`)
+      - traefik.http.services.mailhog-${PROJECT_NAME}.loadbalancer.server.port=8025
     ports:
       - "${PORT_PREFIX}25:8025"
+    networks:
+      - internal
+      - chirripo_proxy
+networks:
+  chirripo_proxy:
+    external: true
+  internal:
+    external: false

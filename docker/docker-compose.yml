@@ -14,6 +14,8 @@ services:
     volumes:
       - 'chirripo_database:/var/lib/mysql'
       - './mysql:/etc/mysql/conf.d'
+    networks:
+      - internal
 
   php:
     image: chirripo/php:${PHP_TAG}
@@ -26,12 +28,17 @@ services:
       - "9000"
     volumes:
       - "${PROJECT_ROOT}:/var/www/html:delegated"
+    networks:
+      - internal
 
   nginx:
     image: nginx:${NGINX_TAG}
     container_name: ${PROJECT_NAME}_nginx
     environment:
       - NGINX_DOCROOT="/var/www/html/${PROJECT_DOCROOT}"
+    labels:
+      - traefik.http.routers.nginx-${PROJECT_NAME}.rule=Host(`${VIRTUAL_HOST}`)
+      - traefik.http.services.nginx-${PROJECT_NAME}.loadbalancer.server.port=80
     ports:
       - "${PORT_PREFIX}80:80"
     depends_on:
@@ -41,6 +48,9 @@ services:
       - "./nginx:/config"
     entrypoint: /config/nginx-entrypoint.sh
     command: nginx -g 'daemon off;'
+    networks:
+      - internal
+      - chirripo_proxy
 
   cli:
     image: chirripo/cli:${CLI_TAG}
@@ -49,8 +59,15 @@ services:
       - "${PORT_PREFIX}22:22"
     volumes:
       - "${PROJECT_ROOT}:/var/www/html:delegated"
+    networks:
+      - internal
 
 volumes:
   chirripo_database:
     name: ${PROJECT_NAME}_database
+    external: false
+networks:
+  chirripo_proxy:
+    external: true
+  internal:
     external: false

@@ -8,3 +8,5 @@ services:
     # This helps keep selenium-chrome from crashing because it uses shared memory.
     volumes:
       - /dev/shm:/dev/shm
+    networks:
+      - internal

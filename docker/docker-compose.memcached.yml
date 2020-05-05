@@ -6,3 +6,5 @@ services:
     environment:
       # Memcached memory limit in megabytes
       - MEMCACHED_MEMORY_LIMIT=128
+    networks:
+      - internal

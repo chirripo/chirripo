@@ -12,5 +12,16 @@ services:
       - "collection1"
       - "-d"
       - "/config"
+    labels:
+      - traefik.http.routers.solr-${PROJECT_NAME}.rule=Host(`solr.${VIRTUAL_HOST}`)
+      - traefik.http.services.solr-${PROJECT_NAME}.loadbalancer.server.port=8983
     volumes:
       - './solr/config:/config'
+    networks:
+      - internal
+      - chirripo_proxy
+networks:
+  chirripo_proxy:
+    external: true
+  internal:
+    external: false

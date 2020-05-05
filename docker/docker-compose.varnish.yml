@@ -3,5 +3,19 @@ services:
   varnish:
     image: thiagofigueiro/varnish-alpine-docker:${VARNISH_TAG}
     container_name: ${PROJECT_NAME}_varnish
+    environment:
+      - VARNISH_BACKEND_ADDRESS=nginx
+      - VARNISH_BACKEND_PORT=80
+    labels:
+      - traefik.http.routers.varnish-${PROJECT_NAME}.rule=Host(`varnish.${VIRTUAL_HOST}`)
+      - traefik.http.services.varnish-${PROJECT_NAME}.loadbalancer.server.port=80
     ports:
       - "${PORT_PREFIX}81:80"
+    networks:
+      - internal
+      - chirripo_proxy
+networks:
+  chirripo_proxy:
+    external: true
+  internal:
+    external: false
