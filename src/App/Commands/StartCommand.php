@@ -33,6 +33,12 @@ class StartCommand extends Command
         $files = $this->setupFiles();
 
         $commands = [
+            [
+                'docker',
+                'network',
+                'create',
+                'chirripo_proxy',
+            ],
             array_merge(['docker-compose'], $files, ['up', '-d', '--remove-orphan']),
             [
                 'docker',
@@ -45,13 +51,14 @@ class StartCommand extends Command
         ];
         $docker_root = __DIR__ . '/../../../docker';
 
-        foreach ($commands as $command) {
+        foreach ($commands as $command_index => $command) {
             $process = new Process($command, $docker_root);
             $process->setTimeout(300);
             $process->run();
 
             // Executes after the command finishes.
-            if (!$process->isSuccessful()) {
+            if (!$process->isSuccessful() && $command_index > 0) {
+                // Allow silent fail on first command (network creation).
                 $output->writeln(sprintf(
                     "\n\nOutput:\n================\n%s\n\nError Output:\n================\n%s",
                     $process->getOutput(),
