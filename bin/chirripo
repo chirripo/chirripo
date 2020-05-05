@@ -23,21 +23,28 @@ use Console\App\Commands\DbImportCommand;
 use Console\App\Commands\PhpModulesCommand;
 use Console\App\Commands\PhpInfoCommand;
 
-$app = new Application();
-$app->setName('Chirripo CLI Tool');
-$app->add(new DockerComposeCommand());
-$app->add(new StartCommand());
-$app->add(new StopCommand());
-$app->add(new DownCommand());
-$app->add(new SshCommand());
-$app->add(new RestartCommand());
-$app->add(new StatusCommand());
-$app->add(new DockerLogsCommand());
-$app->add(new UrlCommand());
-$app->add(new DrushCommand());
-$app->add(new MysqlCommand());
-$app->add(new DbImportCommand());
-$app->add(new PhpModulesCommand());
-$app->add(new PhpInfoCommand());
+/**
+ * Chirripo entrypoint.
+ */
+function chirripo_main() {
+    $app = new Application();
+    $app->setName('Chirripo CLI Tool');
+    $app->add(new DockerComposeCommand());
+    $app->add(new StartCommand());
+    $app->add(new StopCommand());
+    $app->add(new DownCommand());
+    $app->add(new SshCommand());
+    $app->add(new RestartCommand());
+    $app->add(new StatusCommand());
+    $app->add(new DockerLogsCommand());
+    $app->add(new UrlCommand());
+    $app->add(new DrushCommand());
+    $app->add(new MysqlCommand());
+    $app->add(new DbImportCommand());
+    $app->add(new PhpModulesCommand());
+    $app->add(new PhpInfoCommand());
 
-$app->run();
+    $app->run();
+}
+
+chirripo_main();
