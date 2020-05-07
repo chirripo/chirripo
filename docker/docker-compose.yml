@@ -37,7 +37,7 @@ services:
     environment:
       - NGINX_DOCROOT="/var/www/html/${PROJECT_DOCROOT}"
     labels:
-      - traefik.http.routers.nginx-${PROJECT_NAME}.rule=Host(`${VIRTUAL_HOST}`)
+      - traefik.http.routers.nginx-${PROJECT_NAME}.rule=Host(`${VIRTUAL_HOST}`${OTHER_VIRTUAL_HOSTS})
       - traefik.http.services.nginx-${PROJECT_NAME}.loadbalancer.server.port=80
     ports:
       - "${PORT_PREFIX}80:80"
