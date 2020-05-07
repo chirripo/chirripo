@@ -33,7 +33,7 @@ class StatusCommand extends Command
         $files = $this->setupFiles();
 
         $commands = [
-            array_merge(['docker-compose'], $files, ['ps']),
+            array_merge(['docker-compose', '-p', $_ENV['PROJECT_NAME']], $files, ['ps']),
         ];
         $docker_root = __DIR__ . '/../../../docker';
 

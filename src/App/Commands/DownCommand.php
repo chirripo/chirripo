@@ -27,7 +27,7 @@ class DownCommand extends Command
         $output->writeln(sprintf("Executing: docker-compose down...\n"));
 
         $files = $this->setupFiles();
-        $command = array_merge(['docker-compose'], $files, ['down']);
+        $command = array_merge(['docker-compose', '-p', $_ENV['PROJECT_NAME']], $files, ['down']);
         $docker_root = __DIR__ . '/../../../docker';
         $process = new Process($command, $docker_root);
         $process->setTimeout(300);

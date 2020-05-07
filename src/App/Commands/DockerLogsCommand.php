@@ -34,7 +34,7 @@ class DockerLogsCommand extends Command
 
         $files = $this->setupFiles();
 
-        $command = array_merge(['docker-compose'], $files);
+        $command = array_merge(['docker-compose', '-p', $_ENV['PROJECT_NAME']], $files);
         $service = $input->getArgument('service');
         $command = array_merge($command, ['logs', $service]);
         $docker_root = __DIR__ . '/../../../docker';

@@ -30,7 +30,7 @@ class RestartCommand extends Command
         $files = $this->setupFiles();
 
         $commands = [
-            array_merge(['docker-compose'], $files, ['restart']),
+            array_merge(['docker-compose', '-p', $_ENV['PROJECT_NAME']], $files, ['restart']),
         ];
         $docker_root = __DIR__ . '/../../../docker';
 

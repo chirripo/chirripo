@@ -54,6 +54,7 @@ class RoboCommands extends Tasks
             }
             $dcExec->option('-f', $file);
         }
+        $dcExec->option('-p', $_ENV['PROJECT_NAME']);
         foreach ($cmd as $arg) {
             $dcExec->arg($arg);
         }
