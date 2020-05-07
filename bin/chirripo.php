@@ -21,7 +21,7 @@ use Console\App\Commands\DbImportCommand;
 use Console\App\Commands\PhpModulesCommand;
 use Console\App\Commands\PhpInfoCommand;
 
-define('CHIRRIPO_VERSION', '0.2');
+define('CHIRRIPO_VERSION', '0.3');
 
 /**
  * Chirripo version.
