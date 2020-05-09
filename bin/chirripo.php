@@ -20,6 +20,7 @@ use Console\App\Commands\MysqlCommand;
 use Console\App\Commands\DbImportCommand;
 use Console\App\Commands\PhpModulesCommand;
 use Console\App\Commands\PhpInfoCommand;
+use Console\App\Commands\PrintHostsEntries;
 
 define('CHIRRIPO_VERSION', '0.3');
 
@@ -50,6 +51,7 @@ function chirripo_main() {
     $app->add(new DbImportCommand());
     $app->add(new PhpModulesCommand());
     $app->add(new PhpInfoCommand());
+    $app->add(new PrintHostsEntries());
 
     $app->run();
 }

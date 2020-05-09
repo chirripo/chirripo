@@ -29,7 +29,7 @@ class UrlCommand extends Command
         $this->setName('url')
             ->setDescription('Get url for given service')
             ->setHelp(sprintf('Available services:%s', implode(', ', array_keys($this->availableServices))))
-            ->addArgument('service', InputArgument::OPTIONAL, 'Pass the service to lookup the logs for.', 'nginx');
+            ->addArgument('service', InputArgument::OPTIONAL, 'Pass the service to lookup the url for.', 'nginx');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,6 +45,7 @@ class UrlCommand extends Command
         if (isset($this->availableServices[$service])) {
             $url .= $this->availableServices[$service];
             $output->writeln(sprintf('%s', $url));
+            $output->writeln(sprintf('If proxy is in use, you could also access this service at %s', $domain_url));
         } else {
             $output->writeln(sprintf(
                 "Service %s not defined",
