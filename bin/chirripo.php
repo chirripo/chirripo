@@ -22,7 +22,7 @@ use Console\App\Commands\PhpModulesCommand;
 use Console\App\Commands\PhpInfoCommand;
 use Console\App\Commands\PrintHostsEntries;
 
-define('CHIRRIPO_VERSION', '0.5');
+define('CHIRRIPO_VERSION', '1.0');
 
 /**
  * Chirripo version.
