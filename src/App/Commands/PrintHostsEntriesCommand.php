@@ -12,7 +12,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 /**
  * Url Command class.
  */
-class PrintHostsEntries extends Command
+class PrintHostsEntriesCommand extends Command
 {
     use ChirripoCommandTrait;
 
