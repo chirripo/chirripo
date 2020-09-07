@@ -48,11 +48,10 @@ class UrlCommand extends Command
             if (!empty($_ENV['VIRTUAL_HOST'])) {
                 if ($service === 'nginx') {
                     $domain_url = $_ENV['VIRTUAL_HOST'];
-                }
-                else {
+                } else {
                     $domain_url = $service . '.' . $_ENV['VIRTUAL_HOST'];
                 }
-              $output->writeln(sprintf('If proxy is in use, you could also access this service at %s', $domain_url));
+                $output->writeln(sprintf('If proxy is in use, you could also access this service at %s', $domain_url));
             }
         } else {
             $output->writeln(sprintf(
