@@ -32,7 +32,7 @@ class MysqlCommand extends Command
         $query = $input->getArgument('query');
         $docker_root = __DIR__ . '/../../../docker';
 
-        $mysql_string = 'cd /var/www/html ;  mysql -h db -u root -p' . $_SERVER['MYSQL_ROOT_PASSWORD'] . 
+        $mysql_string = 'cd /var/www/html ;  mysql -h db -u root -p' . $_SERVER['MYSQL_ROOT_PASSWORD'] .
             ' ' . $_SERVER['MYSQL_DATABASE'];
         if ($query) {
             $mysql_string .= ' -e "' . $query . '"';

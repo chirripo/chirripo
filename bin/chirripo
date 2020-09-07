@@ -2,4 +2,5 @@
 <?php
 
 require 'chirripo.php';
+
 chirripo_main();

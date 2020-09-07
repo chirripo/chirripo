@@ -1,4 +1,7 @@
 <?php
+
+// @codingStandardsIgnoreFile.
+
 if (\file_exists(__DIR__ . '/../vendor/autoload.php')) {
     require_once __DIR__ . '/../vendor/autoload.php';
 } elseif (\file_exists(__DIR__ . '/../../../autoload.php')) {
@@ -27,14 +30,16 @@ define('CHIRRIPO_VERSION', '1.0');
 /**
  * Chirripo version.
  */
-function chirripo_version() {
+function chirripo_version()
+{
     return CHIRRIPO_VERSION;
 }
 
 /**
  * Chirripo entrypoint.
  */
-function chirripo_main() {
+function chirripo_main()
+{
     $app = new Application();
     $app->setName('Chirripo CLI Tool');
     $app->add(new DockerComposeCommand());

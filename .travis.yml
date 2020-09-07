@@ -21,6 +21,11 @@ before_script:
   - echo "PROJECT_ROOT=~/testchirripo" >> .env
   - echo "XDEBUG_ENABLE=enable" >> .env
 script:
+  - curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+  - mv ./phpcs.phar $HOME/phpcs
+  - chmod +x $HOME/phpcs
+  - cd $TRAVIS_BUILD_DIR
+  - $HOME/phpcs --standard=PSR2 src bin
   - cd ~/testchirripo
   - ./vendor/bin/chirripo start
   - ./vendor/bin/chirripo ps
