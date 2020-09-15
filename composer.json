@@ -15,7 +15,7 @@
         "symfony/console": ">=3.4",
         "symfony/process": ">=3.4",
         "symfony/dotenv": ">=3.4",
-        "consolidation/robo": "^1.4"
+        "consolidation/robo": ">=1.4"
     },
     "autoload": {
         "psr-4": {
