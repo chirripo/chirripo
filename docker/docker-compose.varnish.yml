@@ -9,6 +9,8 @@ services:
     labels:
       - traefik.http.routers.varnish-${PROJECT_NAME}.rule=Host(`varnish.${VIRTUAL_HOST}`)
       - traefik.http.services.varnish-${PROJECT_NAME}.loadbalancer.server.port=80
+      - traefik.http.routers.varnish-ssl-${PROJECT_NAME}.rule=Host(`varnish.${VIRTUAL_HOST}`)
+      - traefik.http.routers.varnish-ssl-${PROJECT_NAME}.tls=true
     ports:
       - "${PORT_PREFIX}81:80"
     networks:

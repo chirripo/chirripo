@@ -15,6 +15,8 @@ services:
     labels:
       - traefik.http.routers.solr-${PROJECT_NAME}.rule=Host(`solr.${VIRTUAL_HOST}`)
       - traefik.http.services.solr-${PROJECT_NAME}.loadbalancer.server.port=8983
+      - traefik.http.routers.solr-ssl-${PROJECT_NAME}.rule=Host(`solr.${VIRTUAL_HOST}`)
+      - traefik.http.routers.solr-ssl-${PROJECT_NAME}.tls=true
     volumes:
       - './solr/config:/config'
     networks:
