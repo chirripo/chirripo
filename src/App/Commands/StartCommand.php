@@ -39,7 +39,7 @@ class StartCommand extends Command
                 'create',
                 'chirripo_proxy',
             ],
-            array_merge(['docker-compose', '-p', $_ENV['PROJECT_NAME']], $files, ['up', '-d', '--remove-orphan']),
+            array_merge(['docker-compose', '-p', $_ENV['PROJECT_NAME']], $files, ['up', '-d', '--remove-orphans']),
             [
                 'docker',
                 'cp',
