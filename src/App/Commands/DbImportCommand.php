@@ -23,7 +23,8 @@ class DbImportCommand extends Command
         $this->setName('db-import')
             ->setDescription('Executes db import command')
             ->setHelp('Import given db into default database.')
-            ->addArgument('filepath', InputArgument::OPTIONAL, 'File to import');
+            ->addArgument('filepath', InputArgument::OPTIONAL, 'File to import')
+            ->addArgument('dbname', InputArgument::OPTIONAL, 'The database in that we want to import the data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -31,7 +32,10 @@ class DbImportCommand extends Command
         $this->setupEnv();
 
         $filepath = $input->getArgument('filepath');
-
+        $databaseName = $_SERVER['MYSQL_DATABASE'];
+        if ($optionalDatabaseName = $input->getArgument('dbname')) {
+          $databaseName = $optionalDatabaseName;
+        }
         $commands = [
             [
                 'docker',
@@ -42,8 +46,8 @@ class DbImportCommand extends Command
                 $_SERVER['MYSQL_USER'],
                 '-p' . $_SERVER['MYSQL_PASSWORD'],
                 '-e',
-                'DROP DATABASE IF EXISTS ' . $_SERVER['MYSQL_USER'] .
-                    '; CREATE DATABASE ' . $_SERVER['MYSQL_DATABASE'] . ';',
+                'DROP DATABASE IF EXISTS ' . $databaseName .
+                    '; CREATE DATABASE ' . $databaseName . ';',
             ],
             [
                 'pv',
@@ -60,7 +64,7 @@ class DbImportCommand extends Command
                 '-u',
                 $_SERVER['MYSQL_USER'],
                 '-p' . $_SERVER['MYSQL_PASSWORD'],
-                $_SERVER['MYSQL_DATABASE'] . ';',
+                $databaseName . ';',
             ],
             [
                 'gunzip',
@@ -75,7 +79,7 @@ class DbImportCommand extends Command
                 '-u',
                 $_SERVER['MYSQL_USER'],
                 '-p' . $_SERVER['MYSQL_PASSWORD'],
-                $_SERVER['MYSQL_DATABASE'] . ';',
+                $databaseName . ';',
             ],
         ];
 
