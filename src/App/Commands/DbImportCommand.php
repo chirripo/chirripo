@@ -43,11 +43,12 @@ class DbImportCommand extends Command
                 $_SERVER['PROJECT_NAME'] . '_db',
                 'mysql',
                 '-u',
-                $_SERVER['MYSQL_USER'],
-                '-p' . $_SERVER['MYSQL_PASSWORD'],
+                'root',
+                '-p' . $_SERVER['MYSQL_ROOT_PASSWORD'],
                 '-e',
-                'DROP DATABASE IF EXISTS ' . $databaseName .
-                    '; CREATE DATABASE ' . $databaseName . ';',
+                'DROP DATABASE IF EXISTS ' . $databaseName . '; ' .
+                'GRANT ALL PRIVILEGES ON `' . $databaseName . '`.* TO `' . $_SERVER['MYSQL_USER'] . '`@`%`; ' .
+                'CREATE DATABASE ' . $databaseName . ';',
             ],
             [
                 'pv',
