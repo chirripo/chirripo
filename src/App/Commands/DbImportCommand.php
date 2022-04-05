@@ -10,6 +10,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Robo\Runner;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Db Import Command class.
@@ -24,7 +25,7 @@ class DbImportCommand extends Command
             ->setDescription('Executes db import command')
             ->setHelp('Import given db into default database.')
             ->addArgument('filepath', InputArgument::OPTIONAL, 'File to import')
-            ->addArgument('dbname', InputArgument::OPTIONAL, 'The database in that we want to import the data');
+            ->addOption('dbname', NULL, InputOption::VALUE_OPTIONAL, 'The database in that we want to import the data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -33,7 +34,7 @@ class DbImportCommand extends Command
 
         $filepath = $input->getArgument('filepath');
         $databaseName = $_SERVER['MYSQL_DATABASE'];
-        if ($optionalDatabaseName = $input->getArgument('dbname')) {
+        if ($optionalDatabaseName = $input->getOption('dbname')) {
           $databaseName = $optionalDatabaseName;
         }
         $commands = [
