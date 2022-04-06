@@ -25,7 +25,7 @@ class DbImportCommand extends Command
             ->setDescription('Executes db import command')
             ->setHelp('Import given db into default database.')
             ->addArgument('filepath', InputArgument::OPTIONAL, 'File to import')
-            ->addOption('dbname', NULL, InputOption::VALUE_OPTIONAL, 'The database in that we want to import the data');
+            ->addOption('dbname', null, InputOption::VALUE_OPTIONAL, 'The database that you want to import the data in');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -33,10 +33,7 @@ class DbImportCommand extends Command
         $this->setupEnv();
 
         $filepath = $input->getArgument('filepath');
-        $databaseName = $_SERVER['MYSQL_DATABASE'];
-        if ($optionalDatabaseName = $input->getOption('dbname')) {
-          $databaseName = $optionalDatabaseName;
-        }
+        $databaseName = $input->getOption('dbname') ?? $_SERVER['MYSQL_DATABASE'];
         $commands = [
             [
                 'docker',
