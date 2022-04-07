@@ -10,6 +10,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Robo\Runner;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Db Import Command class.
@@ -23,7 +24,8 @@ class DbImportCommand extends Command
         $this->setName('db-import')
             ->setDescription('Executes db import command')
             ->setHelp('Import given db into default database.')
-            ->addArgument('filepath', InputArgument::OPTIONAL, 'File to import');
+            ->addArgument('filepath', InputArgument::OPTIONAL, 'File to import')
+            ->addOption('dbname', null, InputOption::VALUE_OPTIONAL, 'The database that you want to import the data in');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -31,7 +33,7 @@ class DbImportCommand extends Command
         $this->setupEnv();
 
         $filepath = $input->getArgument('filepath');
-
+        $databaseName = $input->getOption('dbname') ?? $_SERVER['MYSQL_DATABASE'];
         $commands = [
             [
                 'docker',
@@ -39,11 +41,12 @@ class DbImportCommand extends Command
                 $_SERVER['PROJECT_NAME'] . '_db',
                 'mysql',
                 '-u',
-                $_SERVER['MYSQL_USER'],
-                '-p' . $_SERVER['MYSQL_PASSWORD'],
+                'root',
+                '-p' . $_SERVER['MYSQL_ROOT_PASSWORD'],
                 '-e',
-                'DROP DATABASE IF EXISTS ' . $_SERVER['MYSQL_USER'] .
-                    '; CREATE DATABASE ' . $_SERVER['MYSQL_DATABASE'] . ';',
+                'DROP DATABASE IF EXISTS ' . $databaseName . '; ' .
+                'GRANT ALL PRIVILEGES ON `' . $databaseName . '`.* TO `' . $_SERVER['MYSQL_USER'] . '`@`%`; ' .
+                'CREATE DATABASE ' . $databaseName . ';',
             ],
             [
                 'pv',
@@ -60,7 +63,7 @@ class DbImportCommand extends Command
                 '-u',
                 $_SERVER['MYSQL_USER'],
                 '-p' . $_SERVER['MYSQL_PASSWORD'],
-                $_SERVER['MYSQL_DATABASE'] . ';',
+                $databaseName . ';',
             ],
             [
                 'gunzip',
@@ -75,7 +78,7 @@ class DbImportCommand extends Command
                 '-u',
                 $_SERVER['MYSQL_USER'],
                 '-p' . $_SERVER['MYSQL_PASSWORD'],
-                $_SERVER['MYSQL_DATABASE'] . ';',
+                $databaseName . ';',
             ],
         ];
 
